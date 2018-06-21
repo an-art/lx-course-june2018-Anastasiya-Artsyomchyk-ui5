@@ -1,0 +1,12 @@
+<mvc:View
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	controllerName="anastasiya.artsyomchyk.controller.OrdersOverview">
+
+	<Page title="Orders Overview">
+		<content>
+			<Button text="Order Details" press="onOrderDetailsButtonPress" />
+		</content>
+	</Page>
+
+</mvc:View>

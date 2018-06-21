@@ -1,0 +1,90 @@
+{
+	"sap.app": {
+		"id": "anastasiya.artsyomchyk",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+		}
+	},
+	"sap.ui": {
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_belize"
+		]
+	},
+	"sap.ui5": {
+		"rootView": "anastasiya.artsyomchyk.view.App",
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "anastasiya.artsyomchyk.view",
+				"controlId": "RootApp",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"notFound"
+					]
+				},
+				"async": true
+			},
+			"routes": [
+				{
+                    "pattern": "",
+                    "name": "ordersOverview",
+                    "target": "ordersOverview"
+                },
+                {
+                    "pattern": "orderDetails",
+                    "name": "orderDetails",
+                    "target": "orderDetails"
+                },
+                {
+                    "pattern": "productDetails",
+                    "name": "productDetails",
+                    "target": "productDetails"
+                }
+			],
+			"targets": {
+				"ordersOverview": {
+                    "viewID": "OrdersOverview",
+                    "viewName": "OrdersOverview",
+                    "viewLevel": 1
+                },            
+                "orderDetails": {
+                    "viewId": "OrderDetails",
+                    "viewName": "OrderDetails"
+                },
+                "productDetails": {
+                    "viewId": "ProductDetails",
+                    "viewName": "ProductDetails"
+                },
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				}
+			}
+		},
+		"dependencies": {
+			"minUI5Version": "1.54.0",
+			"libs": {
+				"sap.m": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "anastasiya.artsyomchyk.i18n.i18n"
+				}
+			}
+		}
+	}
+}
