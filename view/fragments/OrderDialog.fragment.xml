@@ -1,0 +1,75 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" >
+	<Dialog
+		id="OrderDialog"
+		title="{i18n>addOrder}">
+		<f:SimpleForm
+			maxContainerCols="1"
+			layout="ResponsiveGridLayout"
+			labelSpanL="12"
+			labelSpanM="12"
+			emptySpanL="0"
+			emptySpanM="0"
+			columnsL="1"
+			columnsM="1">
+			<f:content>
+				<Text class="sapUiSmallMarginTop" textAlign="Center" text="{i18n>summary}"/>
+
+				<Label text="{i18n>customer}"/>
+				<Input value="{summary/customer}" />
+
+				<Label text="{i18n>createdAt}"/>
+				<DatePicker
+						value="{summary/createdAt}"
+						placeholder="{i18n>datePlaceholder}"/>
+
+				<Label text="{i18n>shippedAt}"/>
+				<DatePicker
+						value="{summary/shippedAt}"
+						placeholder="{i18n>datePlaceholder}"/>
+
+				<Label text="{i18n>status}"/>
+				<Select selectedKey="{summary/status}"> 
+					<core:Item key="accepted" text="{i18n>accepted}" value="{summary/status}" />
+					<core:Item key="pending" text="{i18n>pending}" value="{summary/status}" />
+				</Select>
+
+				<Label text="{i18n>Country}"/>
+				<Input value="{shipTo/country}" />
+
+				<Text class="sapUiSmallMarginTop" textAlign="Center" text="{i18n>customerInfo}"/>
+
+				<Label text="{i18n>FirstName}"/>
+				<Input value="{customerInfo/firstName}"/>
+				<Label text="{i18n>LastName}"/>
+				<Input value="{customerInfo/lastName}"/>
+				<Label text="{i18n>Address}"/>
+				<Input value="{customerInfo/address}"/>
+				<Label text="{i18n>Phone}"/>
+				<Input value="{customerInfo/phone}" type="Number" />
+				<Label text="{i18n>Email}"/>
+				<Input value="{customerInfo/email}" type="Email" />
+
+				<Text class="sapUiSmallMarginTop" textAlign="Center" text="{i18n>ShipTo}"/>
+
+				<Label text="{i18n>name}"/>
+				<Input value="{shipTo/name}"/>
+				<Label text="{i18n>Address}"/>
+				<Input value="{shipTo/address}"/>
+				<Label text="{i18n>ZIP}"/>
+				<Input value="{shipTo/ZIP}"/>
+				<Label text="{i18n>Region}"/>
+				<Input value="{shipTo/region}"/>
+				<Label text="{i18n>Country}"/>
+				<Input value="{shipTo/country}"/>
+			</f:content>
+		</f:SimpleForm>
+
+		<buttons>
+			<Button icon="sap-icon://accept" text="{i18n>save}" press="onSaveOrderPress" type = "Accept" />
+			<Button  text="{i18n>cancel}" press="onCancelPress" type = "Reject"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,15 +1,174 @@
-<mvc:View
+<core:View 
+	xmlns:core="sap.ui.core"
+	xmlns:uxap="sap.uxap"
+	xmlns:layout="sap.ui.layout"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.ui.layout.form"
 	controllerName="anastasiya.artsyomchyk.controller.OrderDetails">
-
-	<Page 
-        title="Order Details"
-        showNavButton="true"
+	<Page
+		title="{i18n>orderDetails}"
+		showNavButton="true"
 		navButtonPress="onBackToOrdersButtonPress">
-		<content>
-			<Button text="Product Details" press="onProductDetailsButtonPress" />
-		</content>
-	</Page>
+		<uxap:ObjectPageLayout 
+			useIconTabBar="false" 
+			showTitleInHeaderContent="false">
+			<uxap:headerTitle>
+				<uxap:ObjectPageHeader 				
+					objectTitle="{i18n>order} ({odata>id}), {i18n>from} {odata>summary/createdAt}"
+					objectSubtitle="{i18n>totalPrice} {odata>summary/totalPrice} {odata>summary/currency}">
+				</uxap:ObjectPageHeader>
+			</uxap:headerTitle>
+			<uxap:headerContent>
+				<layout:VerticalLayout>
+					<Text text="{i18n>status}: {odata>summary/status}" />
+					<Text text="{i18n>customer}: {odata>summary/customer}" />
+				</layout:VerticalLayout>
+			</uxap:headerContent>
+			<uxap:sections>
+				<uxap:ObjectPageSection id="shipInfo" title="{i18n>shipInfo}" titleUppercase="false">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection id="shipInfoSS1" title="{i18n>shipInfo}" titleUppercase="false">
+						<uxap:blocks>
+						<Panel
+                            width="auto"
+                            class="sapUiResponsiveMargin sapUiNoContentPadding">
+							<headerToolbar>
+								<Toolbar>
+									<Title text="{i18n>shipToForm}" level="H2" />
+									<Button icon="sap-icon://edit" visible="{=!${orderView>/editShip}}" press="onEditShipPress"/>
+									<Button icon="sap-icon://save" visible="{orderView>/editShip}" press="onSaveShipPress" />
+									<Button icon="sap-icon://cancel" visible="{orderView>/editShip}" press="onCancelShipPress" />
+									<ToolbarSpacer />
+								</Toolbar>
+							</headerToolbar>
+							<content>
+								<f:SimpleForm
+										minWidth="1024"
+										editable="false"
+										layout="ResponsiveGridLayout"
+										labelSpanL="3" labelSpanM="3" emptySpanL="3" emptySpanM="3"
+										columnsL="1" columnsM="1">
+									<f:content>
+										<Label class="sapUiTinyMarginTop" text="{i18n>ShipTo}"/>
+										<Input value="{odata>shipTo/name}" editable="{orderView>/editShip}"/>
+										<Label class="sapUiTinyMarginTop" text="{i18n>Address}"/>
+										<Input value="{odata>shipTo/address}" editable="{orderView>/editShip}"/>
+										<Label class="sapUiTinyMarginTop" text="{i18n>ZIP}"/>
+										<Input value="{odata>shipTo/ZIP}" editable="{orderView>/editShip}"/>
+										<Label class="sapUiTinyMarginTop" text="{i18n>Region}"/>
+										<Input value="{odata>shipTo/region}" editable="{orderView>/editShip}"/>
+										<Label class="sapUiTinyMarginTop" text="{i18n>Country}"/>
+										<Input value="{odata>shipTo/country}" editable="{orderView>/editShip}"/>
+									</f:content>
+								</f:SimpleForm>
+							</content>
+						</Panel>							
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				</uxap:ObjectPageSection>
 
-</mvc:View>
+				<uxap:ObjectPageSection id="customerInfo" title="{i18n>customerInfo}" titleUppercase="false">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection id="customerInfoSS1" title="{i18n>customerInfo}" titleUppercase="false">
+						<uxap:blocks>
+							<Panel
+								width="auto"
+								class="sapUiResponsiveMargin sapUiNoContentPadding">
+								<headerToolbar>
+									<Toolbar>
+										<Title text="{i18n>customerInfoForm}" level="H2" />
+										<Button icon="sap-icon://edit" visible="{=!${orderView>/editCustomer}}" press="onEditCustomerPress"/>
+										<Button icon="sap-icon://save" visible="{orderView>/editCustomer}" press="onSaveCustomerPress" />
+										<Button icon="sap-icon://cancel" visible="{orderView>/editCustomer}" press="onCancelCustomerPress" />
+										<ToolbarSpacer />
+									</Toolbar>
+								</headerToolbar>
+								<content>
+									<f:SimpleForm
+											minWidth="1024"
+											editable="false"
+											layout="ResponsiveGridLayout"
+											labelSpanL="3" labelSpanM="3" emptySpanL="3" emptySpanM="3"
+											columnsL="1" columnsM="1">
+										<f:content>
+											<Label class="sapUiTinyMarginTop" text="{i18n>FirstName}"/>
+											<Input value="{odata>customerInfo/firstName}" editable="{orderView>/editCustomer}"/>
+											<Label class="sapUiTinyMarginTop" text="{i18n>LastName}"/>
+											<Input value="{odata>customerInfo/lastName}" editable="{orderView>/editCustomer}"/>
+											<Label class="sapUiTinyMarginTop" text="{i18n>Address}"/>
+											<Input value="{odata>customerInfo/address}" editable="{orderView>/editCustomer}"/>
+											<Label class="sapUiTinyMarginTop" text="{i18n>Phone}"/>
+											<Input value="{odata>customerInfo/phone}" type="Number" editable="{orderView>/editCustomer}"/>
+											<Label class="sapUiTinyMarginTop" text="{i18n>Email}"/>
+											<Input value="{odata>customerInfo/email}" type="Email" editable="{orderView>/editCustomer}"/>
+										</f:content>
+									</f:SimpleForm>
+								</content>
+							</Panel>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				</uxap:ObjectPageSection>
+
+				<uxap:ObjectPageSection id="products" title="{i18n>products}" titleUppercase="false">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection id="productsSS1" title="{i18n>products}" titleUppercase="false">
+						<uxap:blocks>
+							<Table 
+								class="sapUiResponsiveMargin sapUiNoMarginTop"
+                                delete="onDeleteProductPress"
+                                items="{odata>products}"
+                                mode="Delete"
+                                includeItemInSelection="true"
+                                width="auto">
+
+								<headerToolbar>
+									<Toolbar>
+										<ToolbarSpacer />
+										<Button icon="sap-icon://add" press="onAddProductPress" />
+									</Toolbar>
+								</headerToolbar>
+
+								<columns>
+									<Column>
+										<Text text="{i18n>id}" />
+									</Column>
+									<Column>
+										<Text text="{i18n>name}" />
+									</Column>
+									<Column
+										minScreenWidth="tablet"
+										demandPopin="true">
+										<Text text="{i18n>price}" />
+									</Column>
+									<Column
+										minScreenWidth="tablet"
+										demandPopin="true">
+										<Text text="{i18n>quantity}" />
+									</Column>
+									<Column
+										minScreenWidth="small"
+										demandPopin="true">
+										<Text text="{i18n>totalPrice}" />
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem type="Navigation"
+													press="onProductDetailsButtonPress">
+										<Text text="{odata>id}"/>
+										<Text text="{odata>name}"/>
+										<Text text="{odata>price}"/>
+										<Text text="{odata>quantity}"/>
+										<Text text="{odata>totalPrice} {odata>currency}"/>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				</uxap:ObjectPageSection>
+			</uxap:sections>
+		</uxap:ObjectPageLayout>
+	</Page>
+</core:View>

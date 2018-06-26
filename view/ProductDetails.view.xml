@@ -4,11 +4,49 @@
 	controllerName="anastasiya.artsyomchyk.controller.ProductDetails">
 
 	<Page 
-        title="Product Details"
+        title="{i18n>productDetails}"
         showNavButton="true"
 		navButtonPress="onBackToOrderButtonPress">
-		<content>
-		</content>
+		<ObjectHeader
+				title="{odata>name}"
+				condensed="true"
+				number="{odata>totalPrice}"
+				numberUnit="{odata>currency}" >
+			<attributes>
+				<ObjectAttribute text="{i18n>quantity} {odata>quantity}, {i18n>price}: {odata>price}" />
+			</attributes>
+		</ObjectHeader>
+
+		<Panel>
+			<content>
+				
+				<Label
+						class="sapUiTinyMargin sapUiSmallMarginBottom"
+						text="{i18n>authorName}"/>
+				<Input
+						id="commentAuthor"
+						placeholder="{i18n>enterName}"
+						value="{/author}"
+						valueLiveUpdate="true"
+						width="20%"/>
+
+				<Label class="sapUiSmallMarginBottom sapUiTinyMargin" text="{i18n>rating}" labelFor="RI_default"/>
+				<RatingIndicator id="commentRating" maxValue="5" class="sapUiSmallMarginBottom sapUiTinyMargin" value="{/rating}" />
+
+				<FeedInput id="commentText" placeholder="{i18n>postPlaceholder}" value="{/comment}" post="onPostCommentPress"/>
+				<List
+						id="idCommentsList"
+						noDataText="{i18n>noComments}"
+						showSeparators="Inner"
+						items="{odata>comments}">
+					<FeedListItem
+							sender="{odata>author}"
+							info="{i18n>rating}: {odata>rating}"
+							text="{odata>comment}"
+					/>
+				</List>
+			</content>
+		</Panel>
 	</Page>
 
 </mvc:View>

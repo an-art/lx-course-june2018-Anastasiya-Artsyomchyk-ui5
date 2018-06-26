@@ -42,12 +42,12 @@
                     "target": "ordersOverview"
                 },
                 {
-                    "pattern": "orderDetails",
+                    "pattern": "orderDetails/{orderId}",
                     "name": "orderDetails",
                     "target": "orderDetails"
                 },
                 {
-                    "pattern": "productDetails",
+                    "pattern": "productDetails/{productId}",
                     "name": "productDetails",
                     "target": "productDetails"
                 }
@@ -60,11 +60,11 @@
                 },            
                 "orderDetails": {
                     "viewId": "OrderDetails",
-                    "viewName": "OrderDetails"
+					"viewName": "OrderDetails"
                 },
                 "productDetails": {
                     "viewId": "ProductDetails",
-                    "viewName": "ProductDetails"
+					"viewName": "ProductDetails"
                 },
 				"notFound": {
 					"viewName": "NotFound",

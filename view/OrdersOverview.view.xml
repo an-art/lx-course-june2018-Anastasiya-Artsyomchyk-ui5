@@ -3,9 +3,91 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	controllerName="anastasiya.artsyomchyk.controller.OrdersOverview">
 
-	<Page title="Orders Overview">
+	<Page title="{i18n>ordersOverview}">
 		<content>
-			<Button text="Order Details" press="onOrderDetailsButtonPress" />
+			<IconTabBar
+				id="idIconTabBar"
+				select="onTabFilter"
+				applyContentPadding="false">
+				<items>
+					<IconTabFilter
+						showAll="true"
+						count="{ordersView>/countAll}"
+						text="{i18n>tabAllOrders}"
+						key="all" />
+					<IconTabSeparator />
+					<IconTabFilter
+						icon="sap-icon://pending"
+						iconColor="Negative"
+						count="{ordersView>/pending}"
+						text="{i18n>pending}"
+						key="pending" />
+					<IconTabFilter
+						icon="sap-icon://accept"
+						iconColor="Positive"
+						count="{ordersView>/accepted}"
+						text="{i18n>accepted}"
+						key="accepted" />
+				</items>
+			</IconTabBar>
+			<Table 
+				id="orderTable"
+				class="sapUiResponsiveMargin sapUiNoMarginTop"
+				items="{odata>/Orders}"
+				mode="Delete"
+				delete="onDeleteOrder"
+				updateFinished="countFilteredItems"
+				includeItemInSelection="true"
+				width="auto">
+				<headerToolbar>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button tooltip="{i18n>addOrder}" icon="sap-icon://add" press="onAddOrderPress" />
+					</Toolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column>
+						<Text text="{i18n>id}" />
+					</Column>
+					<Column minScreenWidth="tablet"
+							demandPopin="true">
+						<Text text="{i18n>customer}"/>
+					</Column>
+					<Column minScreenWidth="Tablet"
+							demandPopin="true">
+						<Text text="{i18n>createdAt}"/>
+					</Column>
+					<Column minScreenWidth="Tablet"
+							demandPopin="true">
+						<Text text="{i18n>shippedAt}" />
+					</Column>
+					<Column>
+						<Text text="{i18n>status}"/>
+					</Column>
+					<Column hAlign="Right">
+						<Text text="{i18n>totalPrice}" />
+					</Column>
+					<Column
+							minScreenWidth="tablet"
+							demandPopin="true">
+						<Text text="{i18n>shipCountry}"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem type="Navigation"
+									press="onOrderDetailsButtonPress">
+						<Text text="{odata>id}" />
+						<Text text="{odata>summary/customer}" />
+						<Text text="{odata>summary/createdAt}" />
+						<Text text="{odata>summary/shippedAt}" />
+						<Text text="{odata>summary/status}" />
+						<Text text="{odata>summary/totalPrice} {odata>summary/currency}" />
+						<Text text="{odata>shipTo/country}" />
+					</ColumnListItem>
+				</items>
+			</Table>
 		</content>
 	</Page>
 
